@@ -1,0 +1,69 @@
+---
+
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: 10m
+
+services:
+  klipper:
+    container_name: ${COMPOSE_PROJECT_NAME}-klipper
+    image: mkuf/klipper:latest
+    privileged: true
+    restart: unless-stopped
+    network_mode: host
+    logging: *logging
+    volumes:
+      - /dev:/dev
+      - /run/dbus:/run/dbus
+      - /run/systemd:/run/systemd
+      - run:/opt/printer_data/run
+
+  moonraker:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM mkuf/moonraker
+        USER root
+        RUN apt install -y ffmpeg wget
+        ADD --keep-git-dir=true https://github.com/mainsail-crew/moonraker-timelapse.git /opt/moonraker-timelapse
+        RUN chown -R moonraker:moonraker /opt/moonraker-timelapse
+        USER moonraker
+        RUN ln -s /opt/moonraker-timelapse/component/timelapse.py /opt/moonraker/moonraker/components/timelapse.py
+        RUN ln -s /opt/printer_data/common/moonraker.secrets /opt/printer_data/moonraker.secrets
+    container_name: ${COMPOSE_PROJECT_NAME}-moonraker
+    privileged: true
+    pid: host
+    restart: unless-stopped
+    logging: *logging
+    volumes:
+      - /dev/null:/opt/klipper/config/null
+      - /dev/null:/opt/klipper/docs/null
+      - /run/dbus:/run/dbus
+      - /run/systemd:/run/systemd
+      - run:/opt/printer_data/run
+
+  telegram:
+    container_name: ${COMPOSE_PROJECT_NAME}-telegram
+    image: lefskiy/moonraker-telegram-bot:latest
+    restart: unless-stopped
+    privileged: true
+    logging: *logging
+
+  ustreamer:
+    container_name: ${COMPOSE_PROJECT_NAME}-ustreamer
+    image: mkuf/ustreamer:latest
+    restart: unless-stopped
+    privileged: true
+    command: >
+      --host=0.0.0.0
+      --port=8080
+      --slowdown
+      --device=/dev/webcam
+      --resolution=640x480
+      --format=MJPEG
+      --desired-fps=15
+      --device-timeout=8
+      --allow-origin=*
+    logging: *logging
+
