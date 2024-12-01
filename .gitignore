@@ -1,9 +1,10 @@
 .env
+gcode/
+log/
 
 moonraker.secrets
 .moonraker.conf.bkp
 
 printer-[0-9]*_[0-9]*.cfg
 
-gcode/
-log/
+telegram.secrets

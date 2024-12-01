@@ -10,12 +10,6 @@ services:
       - ./voron-v24/gcode:/opt/printer_data/gcodes
       - ./voron-v24/config:/opt/printer_data/config
       - ./common:/opt/printer_data/common
-      # - ./common/printer.base.cfg:/opt/printer_data/config/printer.base.cfg
-      # - ./common/mainsail.cfg:/opt/printer_data/config/mainsail.cfg
-      # - ./common/timelapse.cfg:/opt/printer_data/config/timelapse.cfg
-      # - ./voron-v24/config/printer.cfg:/opt/printer_data/config/printer.cfg
-      # - ./voron-v24/config/toolhead.cfg:/opt/printer_data/config/toolhead.cfg
-      # - ./voron-v24/config/stealthburner_leds.cfg:/opt/printer_data/config/stealthburner_leds.cfg
 
   moonraker:
     extends:
@@ -28,13 +22,6 @@ services:
       - ./voron-v24/timelapse:/opt/printer_data/timelapse
       - ./voron-v24/config:/opt/printer_data/config
       - ./common:/opt/printer_data/common
-      # - ./common/moonraker.secrets:/opt/printer_data/moonraker.secrets # TODO: Symlink
-      # - ./common/moonraker.base.conf:/opt/printer_data/config/moonraker.base.conf
-      # - ./common/printer.base.cfg:/opt/printer_data/config/printer.base.cfg
-      # - ./voron-v24/config/moonraker.conf:/opt/printer_data/config/moonraker.conf
-      # - ./voron-v24/config/printer.cfg:/opt/printer_data/config/printer.cfg
-      # - ./voron-v24/config/toolhead.cfg:/opt/printer_data/config/toolhead.cfg
-      # - ./voron-v24/config/stealthburner_leds.cfg:/opt/printer_data/config/stealthburner_leds.cfg
 
   telegram:
     extends:
@@ -44,6 +31,7 @@ services:
       - ./voron-v24/gcode:/opt/printer_data/gcodes
       - ./voron-v24/log:/opt/printer_data/logs
       - ./voron-v24/config/telegram.conf:/opt/printer_data/config/telegram.conf
+      - ./voron-v24/config/telegram.secrets:/opt/printer_data/config/secrets.conf
 
   ustreamer:
     extends:
