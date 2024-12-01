@@ -1,0 +1,47 @@
+---
+name: voron-v0
+
+services:
+  klipper:
+    extends:
+      file: common-services.yml
+      service: klipper
+    volumes:
+      - ./voron-v0/gcode:/opt/printer_data/gcodes
+      - ./voron-v0/config:/opt/printer_data/config
+      - ./common:/opt/printer_data/common
+
+  moonraker:
+    extends:
+      file: common-services.yml
+      service: moonraker
+    ports:
+      - 7125:7125
+    volumes:
+      - ./voron-v0/gcode:/opt/printer_data/gcodes
+      - ./voron-v0/timelapse:/opt/printer_data/timelapse
+      - ./voron-v0/config:/opt/printer_data/config
+      - ./common:/opt/printer_data/common
+
+  telegram:
+    extends:
+      file: common-services.yml
+      service: telegram
+    volumes:
+      - ./voron-v0/gcode:/opt/printer_data/gcodes
+      - ./voron-v0/log:/opt/printer_data/logs
+      - ./voron-v0/config/telegram.conf:/opt/printer_data/config/telegram.conf
+      - ./voron-v0/config/telegram.secrets:/opt/printer_data/config/secrets.conf
+
+  ustreamer:
+    extends:
+      file: common-services.yml
+      service: ustreamer
+    devices:
+      - /dev/video0:/dev/webcam
+    ports:
+      - 8080:8080
+
+volumes:
+  run:
+    name: ${COMPOSE_PROJECT_NAME}-run
