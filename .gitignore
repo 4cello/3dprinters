@@ -1,6 +1,7 @@
 .env
 gcode/
 log/
+timelapse/
 
 moonraker.secrets
 .moonraker.conf.bkp

@@ -18,6 +18,7 @@ services:
       - /run/dbus:/run/dbus
       - /run/systemd:/run/systemd
       - run:/opt/printer_data/run
+      - ./common:/opt/printer_data/common
 
   moonraker:
     build:
@@ -37,11 +38,12 @@ services:
     restart: unless-stopped
     logging: *logging
     volumes:
-      - /dev/null:/opt/klipper/config/null
+      - /dev/null:/opt/klipper/config/null # wtf?
       - /dev/null:/opt/klipper/docs/null
       - /run/dbus:/run/dbus
       - /run/systemd:/run/systemd
       - run:/opt/printer_data/run
+      - ./common:/opt/printer_data/common
 
   telegram:
     container_name: ${COMPOSE_PROJECT_NAME}-telegram

@@ -9,7 +9,6 @@ services:
     volumes:
       - ./voron-v24/gcode:/opt/printer_data/gcodes
       - ./voron-v24/config:/opt/printer_data/config
-      - ./common:/opt/printer_data/common
 
   moonraker:
     extends:
@@ -21,7 +20,6 @@ services:
       - ./voron-v24/gcode:/opt/printer_data/gcodes
       - ./voron-v24/timelapse:/opt/printer_data/timelapse
       - ./voron-v24/config:/opt/printer_data/config
-      - ./common:/opt/printer_data/common
 
   telegram:
     extends:
