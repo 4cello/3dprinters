@@ -6,8 +6,10 @@ services:
     extends:
       file: common-services.yml
       service: klipper
+    devices:
+      - /dev/ttyDELTA
     volumes:
-      - /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_a89c9dd9eab5e711a311c17ed4b43ea0-if00-port0:/dev/usbDelta
+      #-:/dev/usbDelta
       - ./anycubic-lp/gcode:/opt/printer_data/gcodes
       - ./anycubic-lp/config:/opt/printer_data/config
 
@@ -30,7 +32,7 @@ services:
       - ./anycubic-lp/gcode:/opt/printer_data/gcodes
       - ./anycubic-lp/log:/opt/printer_data/logs
       - ./anycubic-lp/config/telegram.conf:/opt/printer_data/config/telegram.conf
-      - ./anycubic-lp/config/telegram.secrets:/opt/printer_data/config/secrets.conf
+      - ./anycubic-lp/config/telegram.secrets:/opt/printer_data/config/telegram.secrets
 
   ustreamer:
     extends:

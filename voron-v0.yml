@@ -6,6 +6,8 @@ services:
     extends:
       file: common-services.yml
       service: klipper
+    devices:
+      - /dev/serial/by-id/usb-Klipper_stm32f103xe_33FFD7055356343537741443-if00:/dev/ttyV0
     volumes:
       - ./voron-v0/gcode:/opt/printer_data/gcodes
       - ./voron-v0/config:/opt/printer_data/config
@@ -29,7 +31,7 @@ services:
       - ./voron-v0/gcode:/opt/printer_data/gcodes
       - ./voron-v0/log:/opt/printer_data/logs
       - ./voron-v0/config/telegram.conf:/opt/printer_data/config/telegram.conf
-      - ./voron-v0/config/telegram.secrets:/opt/printer_data/config/secrets.conf
+      - ./voron-v0/config/telegram.secrets:/opt/printer_data/config/telegram.secrets
 
   ustreamer:
     extends:

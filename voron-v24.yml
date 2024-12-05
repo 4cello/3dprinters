@@ -6,7 +6,9 @@ services:
     extends:
       file: common-services.yml
       service: klipper
+    network_mode: host # for CANbus
     volumes:
+      - ./voron-v24/log:/opt/printer_data/logs
       - ./voron-v24/gcode:/opt/printer_data/gcodes
       - ./voron-v24/config:/opt/printer_data/config
 
@@ -17,6 +19,7 @@ services:
     ports:
       - 7126:7125
     volumes:
+      - ./voron-v24/log:/opt/printer_data/logs
       - ./voron-v24/gcode:/opt/printer_data/gcodes
       - ./voron-v24/timelapse:/opt/printer_data/timelapse
       - ./voron-v24/config:/opt/printer_data/config
@@ -29,7 +32,7 @@ services:
       - ./voron-v24/gcode:/opt/printer_data/gcodes
       - ./voron-v24/log:/opt/printer_data/logs
       - ./voron-v24/config/telegram.conf:/opt/printer_data/config/telegram.conf
-      - ./voron-v24/config/telegram.secrets:/opt/printer_data/config/secrets.conf
+      - ./voron-v24/config/telegram.secrets:/opt/printer_data/config/telegram.secrets
 
   ustreamer:
     extends:

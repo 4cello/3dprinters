@@ -11,10 +11,8 @@ services:
     image: mkuf/klipper:latest
     privileged: true
     restart: unless-stopped
-    network_mode: host # required for CANbus operation
     logging: *logging
     volumes:
-      - /dev:/dev
       - /run/dbus:/run/dbus
       - /run/systemd:/run/systemd
       - run:/opt/printer_data/run
