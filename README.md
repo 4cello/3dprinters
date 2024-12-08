@@ -5,7 +5,7 @@ This repository contains my klipper/moonraker configuration, as well as a docker
 ## TODO
 - [ ] Telegram-Bot PR: Support for `[include ...]`, to further reduce redundancy
 - [ ] Clean up old printer configs
-- [ ] Properly adapt the `v0` config
+- [x] Properly adapt the `v0` config
 - [ ] Figure out a way to make base config accessible via Mainsail
     - Clean: Moonraker PR
     - Dirty: Don't mount into `common`, but into one of the already exposed folders...

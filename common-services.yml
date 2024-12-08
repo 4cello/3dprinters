@@ -8,6 +8,7 @@ x-logging: &logging
 services:
   klipper:
     container_name: ${COMPOSE_PROJECT_NAME}-klipper
+    hostname: ${COMPOSE_PROJECT_NAME} # Klipper reports the hostname as printer name
     image: mkuf/klipper:latest
     privileged: true
     restart: unless-stopped
