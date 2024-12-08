@@ -50,6 +50,8 @@ services:
     restart: unless-stopped
     privileged: true
     logging: *logging
+    volumes:
+      - ./common:/opt/printer_data/common
 
   ustreamer:
     container_name: ${COMPOSE_PROJECT_NAME}-ustreamer

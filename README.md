@@ -3,7 +3,7 @@
 This repository contains my klipper/moonraker configuration, as well as a docker compose setup.
 
 ## TODO
-- [ ] Telegram-Bot PR: Support for `[include ...]`, to further reduce redundancy
+- [x] ~~Telegram-Bot PR: Support for `[include ...]`, to further reduce redundancy~~ was already quietly implemented...
 - [ ] Clean up old printer configs
 - [x] Properly adapt the `v0` config
 - [ ] Figure out a way to make base config accessible via Mainsail
@@ -43,7 +43,7 @@ token: # ...
 ```
 
 ### ${PRINTER_NAME}/config/telegram.secrets
-Mounted in `/opt/printer_data/config/secrets.conf`.
+Mounted in `/opt/printer_data/config/telegram.secrets`.
 
 Example:
 ```conf
