@@ -7,9 +7,9 @@ services:
       file: common-services.yml
       service: klipper
     devices:
-      - /dev/ttyDELTA
+      - /dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_a89c9dd9eab5e711a311c17ed4b43ea0-if00-port0:/dev/ttyDELTA
+      # - /dev/serial/by-id/usb-Klipper_rp2040_4150323038323713-if00:/dev/ttyADXL
     volumes:
-      #-:/dev/usbDelta
       - ./anycubic-lp/gcode:/opt/printer_data/gcodes
       - ./anycubic-lp/config:/opt/printer_data/config
 

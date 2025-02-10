@@ -48,7 +48,6 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-telegram
     image: lefskiy/moonraker-telegram-bot:latest
     restart: unless-stopped
-    privileged: true
     logging: *logging
     volumes:
       - ./common:/opt/printer_data/common
@@ -57,15 +56,13 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-ustreamer
     image: mkuf/ustreamer:latest
     restart: unless-stopped
-    privileged: true
     command: >
       --host=0.0.0.0
-      --port=8080
       --slowdown
       --device=/dev/webcam
-      --resolution=640x480
+      --resolution=800x600
       --format=MJPEG
-      --desired-fps=15
+      --desired-fps=10
       --device-timeout=8
       --allow-origin=*
     logging: *logging
