@@ -1,0 +1,40 @@
+---
+name: dummy
+
+services:
+  klipper:
+    extends:
+      file: common-services.yml
+      service: klipper
+    image: mkuf/klipper:latest
+    network_mode: host # for CANbus
+    volumes:
+      - ./dummy/log:/opt/printer_data/logs
+      - ./dummy/gcode:/opt/printer_data/gcodes
+      - ./dummy/config:/opt/printer_data/config
+      - .:/opt/printer_data/printer-configs
+      - /dev:/dev
+
+  hostmcu:
+    image: mkuf/klipper:latest-hostmcu
+    restart: unless-stopped
+    volumes:
+      - /dev:/dev
+      - run:/opt/printer_data/run
+
+
+  moonraker:
+    extends:
+      file: common-services.yml
+      service: moonraker
+    ports:
+      - 7125:7125
+    volumes:
+      - ./dummy/log:/opt/printer_data/logs
+      - ./dummy/gcode:/opt/printer_data/gcodes
+      - ./dummy/config:/opt/printer_data/config
+      - .:/opt/printer_data/printer-configs
+
+volumes:
+  run:
+    name: ${COMPOSE_PROJECT_NAME}-run
