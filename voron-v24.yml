@@ -7,11 +7,31 @@ services:
       file: common-services.yml
       service: klipper
     network_mode: host # for CANbus
+    image: ""
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM alpine as klipper-downloader
+
+        LABEL stage=klipper-downloader
+
+        RUN apk update && \
+            apk add --update git && \
+            apk add --update openssh
+
+        RUN git clone https://github.com/viesturz/klipper-toolchanger
+
+        FROM mkuf/klipper:latest
+
+        COPY --from=klipper-downloader /klipper-toolchanger /opt/klipper-toolchanger
+        
+        RUN for file in /opt/klipper-toolchanger/klipper/extras/*.py; do ln -sfn "$${file}" "/opt/klipper/klippy/extras/"; done
+
     volumes:
       - ./voron-v24/log:/opt/printer_data/logs
       - ./voron-v24/gcode:/opt/printer_data/gcodes
       - ./voron-v24/config:/opt/printer_data/config
-
+      - ./voron-v24/extras:/opt/custom-extras
   moonraker:
     extends:
       file: common-services.yml
