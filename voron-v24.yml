@@ -11,7 +11,7 @@ services:
     build:
       context: .
       dockerfile_inline: |
-        FROM alpine as klipper-downloader
+        FROM alpine AS klipper-downloader
 
         LABEL stage=klipper-downloader
 
@@ -20,13 +20,16 @@ services:
             apk add --update openssh
 
         RUN git clone https://github.com/viesturz/klipper-toolchanger
+        
+        RUN git clone https://github.com/julianschill/klipper-led_effect
 
-        FROM mkuf/klipper:latest
+        FROM mkuf/klipper:v0.13.0-411-g938300f3c
 
         COPY --from=klipper-downloader /klipper-toolchanger /opt/klipper-toolchanger
-        
         RUN for file in /opt/klipper-toolchanger/klipper/extras/*.py; do ln -sfn "$${file}" "/opt/klipper/klippy/extras/"; done
 
+        COPY --from=klipper-downloader /klipper-led_effect /opt/klipper-led_effect
+        RUN for file in /opt/klipper-led_effect/src/*.py; do ln -sfn "$${file}" "/opt/klipper/klippy/extras/"; done
     volumes:
       - ./voron-v24/log:/opt/printer_data/logs
       - ./voron-v24/gcode:/opt/printer_data/gcodes
