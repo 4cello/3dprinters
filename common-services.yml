@@ -46,7 +46,7 @@ services:
 
   telegram:
     container_name: ${COMPOSE_PROJECT_NAME}-telegram
-    image: lefskiy/moonraker-telegram-bot:latest
+    image: lefskiy/moonraker-telegram-bot:development
     restart: unless-stopped
     logging: *logging
     volumes:
