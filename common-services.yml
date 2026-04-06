@@ -30,6 +30,7 @@ services:
         RUN chown -R moonraker:moonraker /opt/moonraker-timelapse
         USER moonraker
         RUN ln -s /opt/moonraker-timelapse/component/timelapse.py /opt/moonraker/moonraker/components/timelapse.py
+        #RUN for f in /opt/printer_data/common/components/*.py; do name="$$(basename $$f)"; ln -s "$$f" "/opt/moonraker/moonraker/components/$$name"; done
         RUN ln -s /opt/printer_data/common/moonraker.secrets /opt/printer_data/moonraker.secrets
     container_name: ${COMPOSE_PROJECT_NAME}-moonraker
     privileged: true
