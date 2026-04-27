@@ -23,7 +23,7 @@ services:
         
         RUN git clone https://github.com/julianschill/klipper-led_effect
 
-        FROM mkuf/klipper:v0.13.0-411-g938300f3c
+        FROM mkuf/klipper:v0.13.0-629-g6349d4fb0
 
         COPY --from=klipper-downloader /klipper-toolchanger /opt/klipper-toolchanger
         RUN for file in /opt/klipper-toolchanger/klipper/extras/*.py; do ln -sfn "$${file}" "/opt/klipper/klippy/extras/"; done
