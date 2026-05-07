@@ -57,14 +57,13 @@ services:
     container_name: ${COMPOSE_PROJECT_NAME}-ustreamer
     image: mkuf/ustreamer:latest
     restart: unless-stopped
-    command: >
-      --host=0.0.0.0
-      --slowdown
-      --device=/dev/webcam
-      --resolution=800x600
-      --format=MJPEG
-      --desired-fps=10
-      --device-timeout=8
-      --allow-origin=*
+    environment:
+      USTREAMER_FORMAT: MJPEG
+      USTREAMER_RESOLUTION: 800x600
+      USTREAMER_FPS: 10
+    entrypoint:
+      - /bin/sh
+      - -c
+      - 'exec /opt/ustreamer --host=0.0.0.0 --slowdown --device=/dev/webcam --resolution=$$USTREAMER_RESOLUTION --format=$$USTREAMER_FORMAT --desired-fps=$$USTREAMER_FPS --device-timeout=8 --allow-origin=* $$USTREAMER_EXTRA_ARGS'
     logging: *logging
 

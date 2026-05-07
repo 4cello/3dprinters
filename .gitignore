@@ -2,6 +2,7 @@
 gcode/
 log/
 timelapse/
+**/config/variables.cfg
 
 moonraker.secrets
 .moonraker.conf.bkp
