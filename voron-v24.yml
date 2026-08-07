@@ -61,8 +61,12 @@ services:
     extends:
       file: common-services.yml
       service: ustreamer
+    environment:
+      USTREAMER_RESOLUTION: 1280x800
+      USTREAMER_FPS: 5
+      #  USTREAMER_FORMAT: YUYV
     devices:
-      - /dev/videoPrinter0:/dev/webcam
+      - /dev/video2:/dev/webcam
     ports:
       - 8080:8080
 
