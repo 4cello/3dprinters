@@ -23,6 +23,8 @@ services:
         
         RUN git clone https://github.com/julianschill/klipper-led_effect
 
+        RUN git clone https://github.com/Cartographer3D/cartographer3d-plugin
+        
         FROM mkuf/klipper:v0.13.0-629-g6349d4fb0
 
         COPY --from=klipper-downloader /klipper-toolchanger /opt/klipper-toolchanger
@@ -30,6 +32,9 @@ services:
 
         COPY --from=klipper-downloader /klipper-led_effect /opt/klipper-led_effect
         RUN for file in /opt/klipper-led_effect/src/*.py; do ln -sfn "$${file}" "/opt/klipper/klippy/extras/"; done
+
+        COPY --from=klipper-downloader /cartographer3d-plugin /opt/cartographer3d-plugin
+        RUN sh -c "/opt/cartographer3d-plugin/scripts/install.sh --klipper /opt/klipper --klippy-env /opt/venv"
     volumes:
       - ./voron-v24/log:/opt/printer_data/logs
       - ./voron-v24/gcode:/opt/printer_data/gcodes
@@ -66,7 +71,7 @@ services:
       USTREAMER_FPS: 5
       #  USTREAMER_FORMAT: YUYV
     devices:
-      - /dev/video2:/dev/webcam
+      - /dev/videoPrinter0:/dev/webcam
     ports:
       - 8080:8080
 
