@@ -16,10 +16,11 @@ services:
         LABEL stage=klipper-downloader
 
         RUN apk update && \
-            apk add --update git && \
-            apk add --update openssh
+            apk add --update git openssh patch 
 
-        RUN git clone https://github.com/viesturz/klipper-toolchanger
+        RUN git clone https://github.com/jwellman80/klipper-toolchanger-easy
+        COPY voron-v24/ktc-easy-install.patch /ktc-easy-install.patch
+        RUN patch /klipper-toolchanger-easy/install.sh < /ktc-easy-install.patch
         
         RUN git clone https://github.com/julianschill/klipper-led_effect
 
@@ -27,8 +28,8 @@ services:
         
         FROM mkuf/klipper:v0.13.0-629-g6349d4fb0
 
-        COPY --from=klipper-downloader /klipper-toolchanger /opt/klipper-toolchanger
-        RUN for file in /opt/klipper-toolchanger/klipper/extras/*.py; do ln -sfn "$${file}" "/opt/klipper/klippy/extras/"; done
+        COPY --from=klipper-downloader /klipper-toolchanger-easy /opt/klipper-toolchanger-easy
+        RUN sh -c /opt/klipper-toolchanger-easy/install.sh
 
         COPY --from=klipper-downloader /klipper-led_effect /opt/klipper-led_effect
         RUN for file in /opt/klipper-led_effect/src/*.py; do ln -sfn "$${file}" "/opt/klipper/klippy/extras/"; done
@@ -81,11 +82,11 @@ services:
       service: ustreamer
     container_name: ustreamer-nozzle
     environment:
-      USTREAMER_RESOLUTION: 1280x800
-      USTREAMER_FPS: 5
-      USTREAMER_FORMAT: YUYV
+      # USTREAMER_RESOLUTION: 1280x800
+      # USTREAMER_FPS: 5
+      # USTREAMER_FORMAT: YUYV
     devices:
-      - /dev/videoPrinterNozzle:/dev/webcam
+      - /dev/video2:/dev/webcam
     ports:
       - 8070:8080
 

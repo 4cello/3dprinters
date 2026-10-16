@@ -1,0 +1,11 @@
+[Unit]
+Description=Pings Cloudflare and restarts NetworkManager if the ping fails.
+
+
+[Service]
+Type=oneshot
+ExecStart=sh -c 'ping -q -c 5 1.1.1.1 || systemctl restart NetworkManager'
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
